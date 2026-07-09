@@ -1,0 +1,106 @@
+<!-- Desktop Custom Cursor Trailer -->
+<div class="custom-cursor" #customCursor></div>
+
+<!-- Dynamic Animated Weather Background -->
+<app-dynamic-background 
+  [conditionCode]="weatherData()?.current?.conditionCode"
+  [isNight]="weatherData()?.current?.conditionIcon?.includes('/night/')"
+></app-dynamic-background>
+
+<div class="dashboard-page-container">
+  <!-- Application Header -->
+  <app-header
+    [currentCity]="currentCityName()"
+    [isFavorite]="isFavorited()"
+    (search)="fetchWeatherData($event)"
+    (toggleFavorite)="onFavoriteToggle($event)"
+  ></app-header>
+
+  <!-- Error Cards Alert State -->
+  <ng-container *ngIf="errorText() && !isLoading()">
+    <app-error-card [message]="errorText()!" (retry)="detectLocationAndLoad()"></app-error-card>
+  </ng-container>
+
+  <!-- Loading Skeletons State -->
+  <ng-container *ngIf="isLoading()">
+    <div class="loading-grid">
+      <div class="loading-col-left">
+        <app-skeleton-loader type="current"></app-skeleton-loader>
+      </div>
+      <div class="loading-col-right">
+        <app-skeleton-loader type="forecast"></app-skeleton-loader>
+        <div class="loading-row mt-24">
+          <app-skeleton-loader type="chart"></app-skeleton-loader>
+          <app-skeleton-loader type="grid"></app-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Loaded Weather Content Grid -->
+  <main class="dashboard-content" *ngIf="weatherData() && !isLoading() && !errorText()">
+    <div class="dashboard-grid">
+      
+      <!-- Layout Column Left: Current metrics & favorites navigation -->
+      <section class="layout-left">
+        <app-current-weather-card
+          [weather]="weatherData()!.current"
+          [location]="weatherData()!.location"
+          [todayMaxC]="weatherData()!.daily[0].maxTempC"
+          [todayMinC]="weatherData()!.daily[0].minTempC"
+          [todayMaxF]="weatherData()!.daily[0].maxTempF"
+          [todayMinF]="weatherData()!.daily[0].minTempF"
+          [isCelsius]="isCelsius()"
+          (toggleUnits)="onUnitToggle()"
+        ></app-current-weather-card>
+        
+        <app-sidebar
+          [favorites]="favorites()"
+          [history]="history()"
+          [currentCity]="currentCityName()"
+          (selectCity)="fetchWeatherData($event)"
+          (removeFavorite)="onRemoveFavorite($event)"
+          (removeHistoryItem)="onRemoveHistoryItem($event)"
+          (clearHistory)="onClearHistory()"
+        ></app-sidebar>
+      </section>
+
+      <!-- Layout Column Middle: Hourly trends, graphs & 7-day intervals -->
+      <section class="layout-middle">
+        <app-hourly-forecast
+          [forecast]="weatherData()!.hourly"
+          [isCelsius]="isCelsius()"
+        ></app-hourly-forecast>
+
+        <app-weather-charts
+          [hourlyData]="weatherData()!.hourly"
+          [isCelsius]="isCelsius()"
+        ></app-weather-charts>
+
+        <app-daily-forecast
+          [forecast]="weatherData()!.daily"
+          [isCelsius]="isCelsius()"
+        ></app-daily-forecast>
+      </section>
+
+      <!-- Layout Column Right: Map and supplementary technical details -->
+      <section class="layout-right">
+        <app-interactive-map
+          [latitude]="weatherData()!.location.lat"
+          [longitude]="weatherData()!.location.lon"
+          [cityName]="weatherData()!.location.name"
+          [tempC]="weatherData()!.current.tempC"
+          [tempF]="weatherData()!.current.tempF"
+          [isCelsius]="isCelsius()"
+          [conditionText]="weatherData()!.current.conditionText"
+        ></app-interactive-map>
+
+        <app-weather-widgets
+          [weather]="weatherData()!.current"
+          [isCelsius]="isCelsius()"
+        ></app-weather-widgets>
+      </section>
+
+    </div>
+  </main>
+</div>

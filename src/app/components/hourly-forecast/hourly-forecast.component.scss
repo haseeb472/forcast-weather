@@ -1,0 +1,123 @@
+.hourly-forecast-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.hourly-scroll-wrapper {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 12px 4px 16px 4px;
+  margin: 0;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  --shadow-main: 0;
+  --shadow-inset: 0;
+  
+  
+  
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 99px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+.hourly-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 110px; // Fixed width for horizontal scrolling consistency
+  padding: 16px 12px;
+  border-radius: 20px !important;
+  text-align: center;
+  background: var(--bg-glass);
+  cursor: pointer;
+
+  .time {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin: 8px 0;
+
+    .weather-icon {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+  }
+
+  .temp {
+    font-family: var(--font-title);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 8px;
+  }
+  
+  [data-theme="light"] .card-details {
+    border-top-color: rgba(15, 23, 42, 0.05);
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    &.rain-stat {
+      color: var(--accent);
+    }
+  }
+}

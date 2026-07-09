@@ -1,0 +1,226 @@
+<div class="widgets-wrapper" *ngIf="weather">
+  <!-- 1. UV Index Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="sun-dim" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">UV Index</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.uv }}</span>
+      <span class="status">{{ getUvStatus(weather.uv) }}</span>
+      <div class="custom-progress mt-8">
+        <div class="custom-progress-fill" [ngStyle]="{'width': (weather.uv / 12 * 100) + '%', 'background': 'linear-gradient(to right, #10b981, #f59e0b, #ef4444)'}"></div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <span>{{ getUvComment(weather.uv) }}</span>
+    </div>
+  </div>
+
+  <!-- 2. Sunrise / Sunset Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="sunrise" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Sun Schedule</span>
+    </div>
+    <div class="widget-body sun-schedule">
+      <div class="sun-item">
+        <app-svg-icon name="sunrise" [size]="18" color="#f59e0b"></app-svg-icon>
+        <div class="sun-details">
+          <span class="label">Sunrise</span>
+          <span class="val">{{ weather.sunrise }}</span>
+        </div>
+      </div>
+      <div class="sun-item mt-10">
+        <app-svg-icon name="sunset" [size]="18" color="#6366f1"></app-svg-icon>
+        <div class="sun-details">
+          <span class="label">Sunset</span>
+          <span class="val">{{ weather.sunset }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Wind Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="wind" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Wind</span>
+    </div>
+    <div class="widget-body wind-body">
+      <div class="wind-info">
+        <span class="value">{{ weather.windKph }}<span class="unit">kph</span></span>
+        <span class="status">Direction: {{ weather.windDir }}</span>
+      </div>
+      <div class="compass-wrapper">
+        <div class="compass-dial">
+          <div class="compass-needle" [ngStyle]="{'transform': 'rotate(' + getWindRotation(weather.windDir) + 'deg)'}">
+            <div class="needle-arrow"></div>
+          </div>
+          <span class="compass-label north">N</span>
+          <span class="compass-label east">E</span>
+          <span class="compass-label south">S</span>
+          <span class="compass-label west">W</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Humidity Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="droplets" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Humidity</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.humidity }}<span class="unit">%</span></span>
+      <span class="status">Humidity is {{ weather.humidity }}%</span>
+      <div class="custom-progress mt-8">
+        <div class="custom-progress-fill" [ngStyle]="{'width': weather.humidity + '%', 'background': 'var(--accent)'}"></div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <span>{{ getHumidityComment(weather.humidity) }}</span>
+    </div>
+  </div>
+
+  <!-- 5. Feels Like Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="thermometer" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Feels Like</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ isCelsius ? weather.feelsLikeC : weather.feelsLikeF }}°</span>
+      <span class="status">Actual: {{ isCelsius ? weather.tempC : weather.tempF }}°</span>
+    </div>
+    <div class="widget-footer">
+      <span>Wind and humidity affect perception.</span>
+    </div>
+  </div>
+
+  <!-- 6. Visibility Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="eye" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Visibility</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.visibilityKm }}<span class="unit">km</span></span>
+      <span class="status">Sight range</span>
+      <div class="custom-progress mt-8">
+        <div class="custom-progress-fill" [ngStyle]="{'width': Math.min(100, (weather.visibilityKm / 10 * 100)) + '%', 'background': 'var(--accent)'}"></div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <span>{{ getVisibilityComment(weather.visibilityKm) }}</span>
+    </div>
+  </div>
+
+  <!-- 7. Pressure Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="gauge" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Pressure</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.pressureMb }}<span class="unit">mb</span></span>
+      <span class="status">Atmospheric load</span>
+    </div>
+    <div class="widget-footer">
+      <span>{{ getPressureComment(weather.pressureMb) }}</span>
+    </div>
+  </div>
+
+  <!-- 8. Air Quality Widget -->
+  <div class="glass-card widget-card" *ngIf="weather.airQuality">
+    <div class="widget-header">
+      <app-svg-icon name="activity" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Air Quality</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.airQuality.usEpaIndex }}</span>
+      <span class="status" [class]="getAqiClass(weather.airQuality.usEpaIndex)">
+        {{ getAqiStatus(weather.airQuality.usEpaIndex) }}
+      </span>
+      
+      <div class="aqi-metrics mt-10">
+        <div class="metric">
+          <span class="lbl">PM2.5</span>
+          <span class="val">{{ weather.airQuality.pm2_5 | number:'1.1-1' }} µg/m³</span>
+        </div>
+        <div class="metric">
+          <span class="lbl">PM10</span>
+          <span class="val">{{ weather.airQuality.pm10 | number:'1.1-1' }} µg/m³</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Cloud Cover Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="cloud" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Cloud Cover</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.cloud }}<span class="unit">%</span></span>
+      <span class="status">Sky obscuration</span>
+      <div class="custom-progress mt-8">
+        <div class="custom-progress-fill" [ngStyle]="{'width': weather.cloud + '%', 'background': 'var(--text-secondary)'}"></div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <span>{{ weather.cloud > 50 ? 'Mostly overcast skies.' : 'Clear open skies.' }}</span>
+    </div>
+  </div>
+
+  <!-- 10. Dew Point Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="thermometer" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Dew Point</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ isCelsius ? weather.dewPointC : (weather.dewPointC * 9/5 + 32) | number:'1.0-0' }}°</span>
+      <span class="status">Condensation temp</span>
+    </div>
+    <div class="widget-footer">
+      <span>{{ getDewPointComment(weather.dewPointC) }}</span>
+    </div>
+  </div>
+
+  <!-- 11. Rain Probability Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="droplets" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Rain Chance</span>
+    </div>
+    <div class="widget-body">
+      <span class="value">{{ weather.rainProbability }}<span class="unit">%</span></span>
+      <span class="status">Precipitation risk</span>
+      <div class="custom-progress mt-8">
+        <div class="custom-progress-fill" [ngStyle]="{'width': weather.rainProbability + '%', 'background': 'var(--accent)'}"></div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <span>{{ weather.rainProbability > 60 ? 'Rain is highly likely.' : 'Low chance of rain.' }}</span>
+    </div>
+  </div>
+
+  <!-- 12. Moon Phase Widget -->
+  <div class="glass-card widget-card">
+    <div class="widget-header">
+      <app-svg-icon name="moon" [size]="14" color="var(--text-muted)"></app-svg-icon>
+      <span class="title">Moon Phase</span>
+    </div>
+    <div class="widget-body moon-body">
+      <span class="value font-16">{{ weather.moonPhase }}</span>
+      <div class="moon-graphic mt-10">
+        <div class="moon-sphere" [class]="weather.moonPhase.toLowerCase().replace(' ', '-')">
+          <div class="moon-light"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

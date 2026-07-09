@@ -1,0 +1,35 @@
+<div class="hourly-forecast-container">
+  <div class="section-title">
+    <app-svg-icon name="clock" [size]="18" color="var(--accent)"></app-svg-icon>
+    <h3>Hourly Forecast</h3>
+  </div>
+
+  <div class="hourly-scroll-wrapper">
+    <div 
+      class="glass-card hourly-card" 
+      *ngFor="let hour of forecast"
+      (mouseenter)="onCardHover($event, true)"
+      (mouseleave)="onCardHover($event, false)"
+    >
+      <span class="time">{{ hour.time }}</span>
+      
+      <div class="icon-wrapper">
+        <img [src]="hour.conditionIcon" [alt]="hour.conditionText" class="weather-icon" />
+      </div>
+      
+      <span class="temp">{{ isCelsius ? hour.tempC : hour.tempF }}°</span>
+      
+      <div class="card-details">
+        <div class="stat-row">
+          <app-svg-icon name="wind" [size]="12" color="var(--text-muted)"></app-svg-icon>
+          <span>{{ hour.windKph }} kph</span>
+        </div>
+        
+        <div class="stat-row rain-stat">
+          <app-svg-icon name="droplets" [size]="12" color="var(--accent)"></app-svg-icon>
+          <span>{{ hour.rainProbability }}%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

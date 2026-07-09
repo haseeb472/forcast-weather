@@ -1,0 +1,255 @@
+.widgets-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.widget-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 160px;
+  border-radius: 20px !important;
+  background: var(--bg-glass);
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  
+  .title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.widget-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  padding-top: 10px;
+
+  .value {
+    font-family: var(--font-title);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+
+    .unit {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-left: 2px;
+    }
+    
+    &.font-16 {
+      font-size: 16px;
+    }
+  }
+
+  .status {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 4px;
+    color: var(--text-secondary);
+  }
+}
+
+.widget-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 8px;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+[data-theme="light"] .widget-footer {
+  border-top-color: rgba(15, 23, 42, 0.04);
+}
+
+/* ==========================================================================
+   Widget-Specific Layouts
+   ========================================================================== */
+
+/* AQI Ratings */
+.aqi-good { color: #10b981 !important; }
+.aqi-mod { color: #eab308 !important; }
+.aqi-sens { color: #f97316 !important; }
+.aqi-unhealthy { color: #ef4444 !important; }
+.aqi-hazard { color: #a855f7 !important; }
+
+.aqi-metrics {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    
+    .lbl {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .val {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+  }
+}
+
+/* Sun Schedule */
+.sun-schedule {
+  .sun-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .sun-details {
+      display: flex;
+      flex-direction: column;
+      
+      .label {
+        font-size: 10px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+      .val {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+    }
+  }
+}
+
+/* Wind & Compass Dial */
+.wind-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.compass-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
+}
+
+.compass-dial {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .compass-label {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+
+    &.north { top: 2px; }
+    &.east { right: 4px; }
+    &.south { bottom: 2px; }
+    &.west { left: 4px; }
+  }
+
+  .compass-needle {
+    position: absolute;
+    width: 2px;
+    height: 38px;
+    background: transparent;
+    transition: transform 1s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    .needle-arrow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 12px solid var(--accent);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -22px;
+        left: -3px;
+        width: 6px;
+        height: 6px;
+        background: var(--text-muted);
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+/* Moon Phase graphics */
+.moon-body {
+  align-items: center;
+  text-align: center;
+  
+  .moon-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .moon-sphere {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1e293b; /* Dark side of the moon */
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset -2px -2px 8px rgba(0, 0, 0, 0.5);
+
+    .moon-light {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #fef08a; /* lit side */
+      box-shadow: 0 0 10px rgba(254, 240, 138, 0.5);
+    }
+    
+    /* Moon Phase Light masks */
+    &.new-moon .moon-light { display: none; }
+    &.full-moon .moon-light { left: 0; width: 100%; }
+    &.first-quarter .moon-light { left: 50%; width: 50%; }
+    &.last-quarter .moon-light { left: 0; width: 50%; }
+    &.waxing-crescent .moon-light { left: 60%; width: 40%; border-radius: 0 50% 50% 0; }
+    &.waning-crescent .moon-light { left: 0; width: 40%; border-radius: 50% 0 0 50%; }
+    &.waxing-gibbous .moon-light { left: 30%; width: 70%; }
+    &.waning-gibbous .moon-light { left: 0; width: 70%; }
+  }
+}
+
+/* Utility spacing overrides */
+.mt-8 { margin-top: 8px; }
+.mt-10 { margin-top: 10px; }
+.mt-12 { margin-top: 12px; }

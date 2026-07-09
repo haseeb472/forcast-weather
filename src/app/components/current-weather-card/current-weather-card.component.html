@@ -1,0 +1,70 @@
+<div class="glass-card current-weather-container" *ngIf="weather && location">
+  <div class="location-details">
+    <div class="city-row">
+      <app-svg-icon name="map-pin" [size]="18" color="var(--accent)"></app-svg-icon>
+      <h2>{{ location.name }}</h2>
+    </div>
+    <span class="country-name">{{ location.region ? location.region + ', ' : '' }}{{ location.country }}</span>
+  </div>
+
+  <div class="weather-main">
+    <div class="temp-section">
+      <span class="temperature">{{ animatedTemp() }}°</span>
+      <div class="unit-selector" (click)="onUnitToggle()">
+        <span class="unit" [class.active]="isCelsius">C</span>
+        <span class="divider">/</span>
+        <span class="unit" [class.active]="!isCelsius">F</span>
+      </div>
+    </div>
+    
+    <div class="condition-section">
+      <div class="icon-glow-wrapper" [class]="getWeatherClass(weather.conditionCode)">
+        <img [src]="weather.conditionIcon" [alt]="weather.conditionText" class="condition-img" />
+      </div>
+      <span class="condition-text">{{ weather.conditionText }}</span>
+    </div>
+  </div>
+
+  <div class="weather-footer">
+    <div class="feels-like">
+      Feels like: <span class="val">{{ animatedFeelsLike() }}°</span>
+    </div>
+    
+    <div class="temp-range">
+      <span class="high">H: {{ isCelsius ? todayMaxC : todayMaxF }}°</span>
+      <span class="low">L: {{ isCelsius ? todayMinC : todayMinF }}°</span>
+    </div>
+  </div>
+
+  <div class="weather-quick-stats">
+    <div class="stat-item">
+      <div class="stat-icon-wrapper">
+        <app-svg-icon name="droplets" [size]="18" color="var(--accent)"></app-svg-icon>
+      </div>
+      <div class="stat-info">
+        <span class="label">Humidity</span>
+        <span class="value">{{ weather.humidity }}%</span>
+      </div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-icon-wrapper">
+        <app-svg-icon name="wind" [size]="18" color="var(--accent)"></app-svg-icon>
+      </div>
+      <div class="stat-info">
+        <span class="label">Wind Speed</span>
+        <span class="value">{{ weather.windKph }} km/h</span>
+      </div>
+    </div>
+
+    <div class="stat-item">
+      <div class="stat-icon-wrapper">
+        <app-svg-icon name="sun-dim" [size]="18" color="var(--accent)"></app-svg-icon>
+      </div>
+      <div class="stat-info">
+        <span class="label">UV Index</span>
+        <span class="value">{{ weather.uv }}</span>
+      </div>
+    </div>
+  </div>
+</div>

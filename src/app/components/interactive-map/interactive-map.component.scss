@@ -1,0 +1,91 @@
+.map-container-wrapper {
+  padding: 24px;
+  width: 100%;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 12px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.map-body {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+}
+
+.map-canvas {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Custom Marker (Pulsing Radar Wave)
+   ========================================================================== */
+.custom-map-marker-container {
+  background: transparent !important;
+  border: none !important;
+}
+
+.map-pulse-marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .pulse-ring {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: rgba(var(--accent-rgb), 0.4);
+    animation: markerPulse 1.8s ease-out infinite;
+  }
+
+  .pulse-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent);
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.8);
+  }
+}
+
+@keyframes markerPulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   Custom Popup Card
+   ========================================================================== */
+.map-popup-card {
+  padding: 2px;
+  text-align: left;
+}

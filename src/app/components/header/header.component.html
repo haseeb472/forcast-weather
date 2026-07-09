@@ -1,0 +1,72 @@
+<header class="glass-card header-container">
+  <div class="logo-section">
+    <div class="logo-icon-wrapper">
+      <app-svg-icon name="sun" [size]="28" color="var(--accent)"></app-svg-icon>
+    </div>
+    <div class="logo-text">
+      <h1>AeroWeather</h1>
+      <span class="subtitle">Premium Forecast Dashboard</span>
+    </div>
+  </div>
+
+  <div class="middle-section">
+    <div class="search-box-wrapper">
+      <div class="input-wrapper">
+        <app-svg-icon name="search" [size]="18" color="var(--text-muted)" class="search-icon"></app-svg-icon>
+        <input 
+          type="text" 
+          placeholder="Search City, Country, or Coordinates..." 
+          class="glass-input search-input"
+          [(ngModel)]="searchQuery"
+          (input)="onInputChanged(searchQuery)"
+          (keydown.enter)="triggerSearch()"
+        />
+        <button class="gps-btn" (click)="useGPS()" title="Use GPS Location">
+          <app-svg-icon name="map-pin" [size]="18" color="var(--accent)"></app-svg-icon>
+        </button>
+      </div>
+
+      <!-- Autocomplete Dropdown -->
+      <div class="suggestions-dropdown glass-card" *ngIf="showSuggestions() && suggestions().length > 0">
+        <div 
+          class="suggestion-item" 
+          *ngFor="let item of suggestions()" 
+          (click)="selectSuggestion(item)"
+        >
+          <app-svg-icon name="map-pin" [size]="14" color="var(--text-muted)"></app-svg-icon>
+          <span class="city-name">{{ item.name }}</span>
+          <span class="region-info" *ngIf="item.region || item.country">
+            - {{ item.region ? item.region + ', ' : '' }}{{ item.country }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <div class="favorites-section" *ngIf="currentCity">
+      <button class="fav-btn" [class.active]="isFavorite" (click)="toggleFav()" title="Toggle Favorite">
+        <app-svg-icon 
+          name="star" 
+          [size]="20" 
+          [color]="isFavorite ? '#eab308' : 'var(--text-muted)'"
+        ></app-svg-icon>
+      </button>
+    </div>
+
+    <div class="clock-display">
+      <span class="time">{{ currentTime() }}</span>
+      <span class="date">{{ currentDate() }}</span>
+    </div>
+
+    <div class="theme-toggle-wrapper">
+      <button class="theme-btn" (click)="themeService.toggleTheme()" title="Toggle Dark/Light Mode">
+        <app-svg-icon 
+          [name]="themeService.theme() === 'dark' ? 'sun' : 'moon'" 
+          [size]="20" 
+          color="var(--accent)"
+        ></app-svg-icon>
+      </button>
+    </div>
+  </div>
+</header>

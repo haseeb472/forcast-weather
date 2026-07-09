@@ -1,0 +1,163 @@
+.weather-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-size: 200% 200%;
+  animation: gradientShift 20s ease infinite;
+}
+
+.particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.lightning-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==========================================================================
+   Sky Gradients (Atmospheric Color Schemes)
+   ========================================================================== */
+
+/* 1. Clear / Sunny Sky */
+.clear-sky {
+  background: linear-gradient(135deg, #00b4db 0%, #0083b0 50%, #ff8c00 100%);
+  
+  // Ambient Sun Glow
+  &::after {
+    content: '';
+    position: absolute;
+    top: -15%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(255, 230, 160, 0.4) 0%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    animation: floatingSun 25s ease-in-out infinite alternate;
+  }
+}
+
+/* 2. Partly Cloudy Sky */
+.partly-cloudy-sky {
+  background: linear-gradient(135deg, #3a7bd5 0%, #3a6073 60%, #ffafbd 100%);
+  
+  // Soft ambient cloud layers
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -20%;
+    width: 140%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+    pointer-events: none;
+  }
+}
+
+/* 3. Cloudy Sky */
+.cloudy-sky {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+}
+
+/* 4. Rain Sky */
+.rain-sky {
+  background: linear-gradient(135deg, #1a1c29 0%, #2f3448 60%, #141724 100%);
+}
+
+/* 5. Thunderstorm Sky */
+.thunderstorm-sky {
+  background: linear-gradient(135deg, #090a10 0%, #151b2d 50%, #090a10 100%);
+}
+
+/* 6. Snow Sky */
+.snow-sky {
+  background: linear-gradient(135deg, #757f9a 0%, #d7dde8 70%, #ffffff 100%);
+  
+  // Frost overlay
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.25) 100%);
+    pointer-events: none;
+  }
+}
+
+/* 7. Fog Sky */
+.fog-sky {
+  background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+}
+
+/* 8. Night Sky (Stars & Moon) */
+.night-sky {
+  background: linear-gradient(135deg, #020208 0%, #0c0822 50%, #1c103a 100%);
+  
+  // Moon Glow
+  &::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    width: 25vw;
+    height: 25vw;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatingSun {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-3vw, 2vh) scale(1.05);
+  }
+  100% {
+    transform: translate(3vw, -2vh) scale(0.95);
+  }
+}

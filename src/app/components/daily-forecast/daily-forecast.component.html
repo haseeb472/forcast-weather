@@ -1,0 +1,41 @@
+<div class="daily-forecast-container glass-card">
+  <div class="section-title">
+    <app-svg-icon name="calendar" [size]="18" color="var(--accent)"></app-svg-icon>
+    <h3>7-Day Forecast</h3>
+  </div>
+
+  <div class="daily-list">
+    <div 
+      class="daily-row" 
+      *ngFor="let day of forecast; let i = index"
+    >
+      <span class="day-name">{{ i === 0 ? 'Today' : day.dayName }}</span>
+      
+      <div class="condition-col">
+        <img [src]="day.conditionIcon" [alt]="day.conditionText" class="weather-icon" />
+        <span class="rain-chance" *ngIf="day.rainProbability > 0">
+          {{ day.rainProbability }}%
+        </span>
+      </div>
+
+      <div class="stats-col">
+        <div class="stat-item wind">
+          <app-svg-icon name="wind" [size]="12" color="var(--text-muted)"></app-svg-icon>
+          <span>{{ day.maxWindKph }} kph</span>
+        </div>
+        <div class="stat-item humidity">
+          <app-svg-icon name="droplets" [size]="12" color="var(--text-muted)"></app-svg-icon>
+          <span>{{ day.avgHumidity }}%</span>
+        </div>
+      </div>
+
+      <div class="temp-col">
+        <span class="min-temp">{{ isCelsius ? day.minTempC : day.minTempF }}°</span>
+        <div class="temp-bar-wrapper">
+          <div class="temp-bar-fill"></div>
+        </div>
+        <span class="max-temp">{{ isCelsius ? day.maxTempC : day.maxTempF }}°</span>
+      </div>
+    </div>
+  </div>
+</div>

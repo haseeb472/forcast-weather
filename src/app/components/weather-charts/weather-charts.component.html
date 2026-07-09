@@ -1,0 +1,43 @@
+<div class="charts-container glass-card">
+  <div class="chart-header">
+    <div class="title-row">
+      <app-svg-icon name="activity" [size]="18" color="var(--accent)"></app-svg-icon>
+      <h3>Forecast Trends</h3>
+    </div>
+    
+    <div class="tabs-row">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'temp'" 
+        (click)="selectTab('temp')"
+      >
+        Temp
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'humidity'" 
+        (click)="selectTab('humidity')"
+      >
+        Precipitation
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'wind'" 
+        (click)="selectTab('wind')"
+      >
+        Wind
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'pressure'" 
+        (click)="selectTab('pressure')"
+      >
+        Pressure
+      </button>
+    </div>
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas #chartCanvas></canvas>
+  </div>
+</div>

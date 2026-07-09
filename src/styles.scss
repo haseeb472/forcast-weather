@@ -1,0 +1,362 @@
+/* Premium Typography Imports */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+/* Leaflet map styles */
+@import "leaflet/dist/leaflet.css";
+
+/* ==========================================================================
+   Design Tokens & Themes
+   ========================================================================== */
+:root[data-theme="dark"] {
+  --font-title: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Color Palette */
+  --bg-app: #070b19; /* Deep navy */
+  --bg-gradient: linear-gradient(135deg, #070b19 0%, #0d1527 50%, #050811 100%);
+  --bg-glass: rgba(13, 22, 45, 0.45);
+  --bg-glass-hover: rgba(18, 30, 60, 0.6);
+  --bg-glass-active: rgba(22, 38, 75, 0.7);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-hover: rgba(255, 255, 255, 0.15);
+  
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Accents & Glows */
+  --accent: #3b82f6; /* Electric blue */
+  --accent-rgb: 59, 130, 246;
+  --accent-glow: rgba(59, 130, 246, 0.35);
+  --accent-secondary: #10b981; /* Neon green */
+  --accent-secondary-rgb: 16, 185, 129;
+  
+  /* Card Shadows */
+  --shadow-main: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+  --shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.15);
+
+  /* Temperature Gradients */
+  --temp-gradient-warm: linear-gradient(135deg, #f59e0b, #ef4444);
+  --temp-gradient-cold: linear-gradient(135deg, #3b82f6, #06b6d4);
+  
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="light"] {
+  --font-title: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+
+  /* Color Palette */
+  --bg-app: #f1f5f9; /* Soft light gray-blue */
+  --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  --bg-glass: rgba(255, 255, 255, 0.55);
+  --bg-glass-hover: rgba(255, 255, 255, 0.75);
+  --bg-glass-active: rgba(255, 255, 255, 0.85);
+  --border-glass: rgba(15, 23, 42, 0.08);
+  --border-glass-hover: rgba(15, 23, 42, 0.15);
+  
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  /* Accents & Glows */
+  --accent: #2563eb; /* Royal blue */
+  --accent-rgb: 37, 99, 235;
+  --accent-glow: rgba(37, 99, 235, 0.15);
+  --accent-secondary: #059669; /* Rich green */
+  --accent-secondary-rgb: 5, 150, 105;
+  
+  /* Card Shadows */
+  --shadow-main: 0 8px 32px 0 rgba(15, 23, 42, 0.06);
+  --shadow-inset: inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.08);
+
+  /* Temperature Gradients */
+  --temp-gradient-warm: linear-gradient(135deg, #d97706, #dc2626);
+  --temp-gradient-cold: linear-gradient(135deg, #2563eb, #0891b2);
+  
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(15, 23, 42, 0.1);
+  --scrollbar-thumb-hover: rgba(15, 23, 42, 0.2);
+}
+
+/* ==========================================================================
+   Global Reset
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-app);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Custom frosted-glass scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 99px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Custom Cursor (Desktop Only) */
+@media (min-width: 1024px) {
+  .custom-cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent);
+    background: rgba(var(--accent-rgb), 0.1);
+    border-radius: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+  }
+  .custom-cursor.hovering {
+    width: 40px;
+    height: 40px;
+    background: rgba(var(--accent-rgb), 0.2);
+    border-color: var(--accent);
+  }
+}
+
+/* ==========================================================================
+   Glassmorphism Styles
+   ========================================================================== */
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
+  box-shadow: var(--shadow-main), var(--shadow-inset);
+  transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+  pointer-events: none;
+}
+
+.glass-card:hover::before {
+  left: 125%;
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-glass-hover);
+  box-shadow: var(--shadow-main), var(--shadow-glow), var(--shadow-inset);
+  background: var(--bg-glass-hover);
+}
+
+/* Global Form Elements */
+input.glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+[data-theme="light"] input.glass-input {
+  background: rgba(15, 23, 42, 0.03);
+}
+input.glass-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
+  background: rgba(255, 255, 255, 0.08);
+}
+[data-theme="light"] input.glass-input:focus {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+button.glass-button {
+  background: rgba(var(--accent-rgb), 0.15);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: 14px;
+  padding: 12px 20px;
+  color: var(--accent);
+  font-family: var(--font-title);
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button.glass-button:hover {
+  background: rgba(var(--accent-rgb), 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+button.glass-button:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================================
+   Leaflet Map Overrides (Premium Design integration)
+   ========================================================================== */
+.leaflet-container {
+  font-family: var(--font-body) !important;
+  background: var(--bg-app) !important;
+  border-radius: 20px;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--border-glass) !important;
+  box-shadow: var(--shadow-main) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.leaflet-bar a {
+  background: var(--bg-glass) !important;
+  backdrop-filter: blur(10px) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+  transition: background 0.2s !important;
+}
+
+.leaflet-bar a:hover {
+  background: var(--bg-glass-hover) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--bg-glass) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid var(--border-glass) !important;
+  color: var(--text-primary) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-main) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--bg-glass) !important;
+  border-left: 1px solid var(--border-glass) !important;
+  border-bottom: 1px solid var(--border-glass) !important;
+}
+
+/* ==========================================================================
+   Progress Bar Custom Styling
+   ========================================================================== */
+.custom-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+}
+[data-theme="light"] .custom-progress {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.custom-progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================================
+   Utilities & Animations
+   ========================================================================== */
+.text-glow {
+  text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+}
+
+.pulse-glow {
+  animation: glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 5px rgba(var(--accent-rgb), 0.2);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5);
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmerAnim 1.5s infinite;
+}
+[data-theme="light"] .shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(15, 23, 42, 0) 0%,
+    rgba(15, 23, 42, 0.03) 50%,
+    rgba(15, 23, 42, 0) 100%
+  );
+}
+
+@keyframes shimmerAnim {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

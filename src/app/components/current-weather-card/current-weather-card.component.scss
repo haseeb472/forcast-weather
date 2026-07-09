@@ -1,0 +1,292 @@
+.current-weather-container {
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px !important;
+  background: var(--bg-glass);
+}
+
+/* ==========================================================================
+   Location Row
+   ========================================================================== */
+.location-details {
+  margin-bottom: 20px;
+
+  .city-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+  }
+
+  .country-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: 26px;
+  }
+}
+
+/* ==========================================================================
+   Main Weather Stats (Temp & Condition)
+   ========================================================================== */
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.temp-section {
+  display: flex;
+  align-items: flex-start;
+
+  .temperature {
+    font-family: var(--font-title);
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 0.9;
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .unit-selector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    margin-left: 6px;
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-muted);
+    user-select: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--accent);
+    }
+
+    .unit {
+      transition: all 0.2s ease;
+      &.active {
+        color: var(--text-primary);
+        font-weight: 700;
+        transform: scale(1.1);
+      }
+    }
+    
+    .divider {
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+  }
+}
+
+.condition-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Icon Floating and Glowing Backdrops */
+.icon-glow-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.5s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    filter: blur(25px);
+    z-index: -1;
+    opacity: 0.8;
+    transition: background 0.5s ease;
+  }
+
+  /* Weather State Glows */
+  &.clear::before { background: rgba(245, 158, 11, 0.4); }
+  &.rain::before { background: rgba(59, 130, 246, 0.45); }
+  &.snow::before { background: rgba(14, 165, 233, 0.35); }
+  &.storm::before { background: rgba(139, 92, 246, 0.5); }
+  &.mist::before, &.cloudy::before { background: rgba(148, 163, 184, 0.3); }
+
+  .condition-img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    animation: floatingIcon 6s ease-in-out infinite;
+  }
+}
+
+.condition-text {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Card Footer
+   ========================================================================== */
+.weather-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-glass);
+  font-size: 14px;
+  color: var(--text-secondary);
+
+  .feels-like {
+    .val {
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+  }
+
+  .temp-range {
+    display: flex;
+    gap: 12px;
+    font-weight: 600;
+
+    .high {
+      color: #ef4444; /* red accent */
+    }
+    .low {
+      color: var(--accent); /* blue accent */
+    }
+  }
+}
+
+/* ==========================================================================
+   Quick Stats Grid
+   ========================================================================== */
+.weather-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--border-glass);
+      transform: translateY(-2px);
+    }
+  }
+  
+  [data-theme="light"] .stat-item {
+    background: rgba(15, 23, 42, 0.01);
+    border-color: rgba(15, 23, 42, 0.02);
+    
+    &:hover {
+      background: rgba(15, 23, 42, 0.03);
+    }
+  }
+
+  .stat-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(var(--accent-rgb), 0.08);
+    margin-bottom: 8px;
+  }
+
+  .stat-info {
+    display: flex;
+    flex-direction: column;
+    
+    .label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 2px;
+    }
+
+    .value {
+      font-family: var(--font-title);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+  }
+}
+
+/* ==========================================================================
+   Animations & Responsive
+   ========================================================================== */
+@keyframes floatingIcon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 480px) {
+  .current-weather-container {
+    padding: 20px;
+  }
+
+  .temp-section .temperature {
+    font-size: 64px;
+  }
+
+  .icon-glow-wrapper {
+    width: 80px;
+    height: 80px;
+    
+    .condition-img {
+      width: 70px;
+      height: 70px;
+    }
+  }
+
+  .weather-quick-stats {
+    gap: 8px;
+    
+    .stat-info .value {
+      font-size: 12px;
+    }
+  }
+}

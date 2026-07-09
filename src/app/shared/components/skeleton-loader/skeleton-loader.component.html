@@ -1,0 +1,58 @@
+<div [ngSwitch]="type" class="skeleton-wrapper">
+  <!-- 1. Current Weather Skeleton -->
+  <div *ngSwitchCase="'current'" class="glass-card skeleton-card-wrapper skeleton-current">
+    <div class="skeleton-header-row">
+      <div class="shimmer line w-50 h-24"></div>
+      <div class="shimmer line w-30 h-14 mt-6"></div>
+    </div>
+    
+    <div class="skeleton-main-row mt-20">
+      <div class="shimmer line w-40 h-64"></div>
+      <div class="shimmer circle w-72 h-72"></div>
+    </div>
+
+    <div class="skeleton-footer-row mt-20">
+      <div class="shimmer line w-30 h-16"></div>
+      <div class="shimmer line w-40 h-16"></div>
+    </div>
+
+    <div class="skeleton-stats-grid mt-24">
+      <div class="shimmer grid-box" *ngFor="let i of [1,2,3]"></div>
+    </div>
+  </div>
+
+  <!-- 2. Forecast Skeleton -->
+  <div *ngSwitchCase="'forecast'" class="skeleton-forecast">
+    <div class="shimmer line w-20 h-18 mb-16"></div>
+    <div class="forecast-scroller">
+      <div class="glass-card skeleton-card-wrapper skeleton-forecast-item" *ngFor="let item of [1,2,3,4,5,6]">
+        <div class="shimmer line w-50 h-12"></div>
+        <div class="shimmer circle w-36 h-36 mt-10"></div>
+        <div class="shimmer line w-60 h-16 mt-10"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Widgets Grid Skeleton -->
+  <div *ngSwitchCase="'grid'" class="skeleton-grid">
+    <div class="glass-card skeleton-card-wrapper skeleton-widget-item" *ngFor="let item of [1,2,3,4,5,6]">
+      <div class="widget-header-skeleton">
+        <div class="shimmer circle w-16 h-16"></div>
+        <div class="shimmer line w-40 h-12"></div>
+      </div>
+      <div class="shimmer line w-60 h-28 mt-16"></div>
+      <div class="shimmer line w-80 h-12 mt-10"></div>
+    </div>
+  </div>
+
+  <!-- 4. Chart Skeleton -->
+  <div *ngSwitchCase="'chart'" class="glass-card skeleton-card-wrapper skeleton-chart">
+    <div class="chart-header-skeleton">
+      <div class="shimmer line w-25 h-18"></div>
+      <div class="tabs-skeleton">
+        <div class="shimmer line w-60 h-28"></div>
+      </div>
+    </div>
+    <div class="shimmer line w-100 h-200 mt-20"></div>
+  </div>
+</div>

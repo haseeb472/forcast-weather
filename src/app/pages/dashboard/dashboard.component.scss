@@ -1,0 +1,136 @@
+.dashboard-page-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+  min-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content {
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   Responsive Grid System (12 Columns)
+   ========================================================================== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.layout-left {
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.layout-middle {
+  grid-column: span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.layout-right {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   Loading Skeleton Layouts
+   ========================================================================== */
+.loading-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.loading-col-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loading-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   Responsive Overrides
+   ========================================================================== */
+
+/* 1. Laptops / Smaller Desktops */
+@media (max-width: 1200px) {
+  .layout-left {
+    grid-column: span 4;
+  }
+  
+  .layout-middle {
+    grid-column: span 8;
+  }
+  
+  .layout-right {
+    grid-column: span 12; // Wrap map and widgets full-width below forecast
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    align-items: start;
+  }
+  
+  .loading-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .loading-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 2. Tablets */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    gap: 16px;
+  }
+
+  .layout-left {
+    grid-column: span 12; // stack all columns vertically
+  }
+  
+  .layout-middle {
+    grid-column: span 12;
+  }
+  
+  .layout-right {
+    grid-column: span 12;
+    grid-template-columns: 1fr; // Stack map and widgets
+    gap: 16px;
+  }
+  
+  .dashboard-page-container {
+    padding: 16px;
+  }
+}
+
+/* 3. Small Mobiles */
+@media (max-width: 480px) {
+  .dashboard-page-container {
+    padding: 12px;
+  }
+  
+  .dashboard-grid {
+    gap: 12px;
+  }
+}

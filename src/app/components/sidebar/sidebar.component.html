@@ -1,0 +1,66 @@
+<div class="sidebar-wrapper">
+  <!-- Favorites Card -->
+  <div class="glass-card section-card favorites-card">
+    <div class="section-header">
+      <div class="header-title">
+        <app-svg-icon name="star" [size]="16" color="#eab308"></app-svg-icon>
+        <h3>Favorite Cities</h3>
+      </div>
+    </div>
+    
+    <div class="list-container" *ngIf="favorites.length > 0; else noFavs">
+      <div 
+        class="list-item" 
+        *ngFor="let city of favorites"
+        [class.active]="city.toLowerCase() === currentCity.toLowerCase()"
+        (click)="onSelect(city)"
+      >
+        <span class="city-name">{{ city }}</span>
+        <button class="action-btn delete-btn" (click)="onRemoveFav($event, city)" title="Remove Favorite">
+          <app-svg-icon name="trash" [size]="14" color="var(--text-muted)"></app-svg-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #noFavs>
+      <div class="empty-state">
+        <span>No favorite cities. Click the star in the header to add one!</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- History Card -->
+  <div class="glass-card section-card history-card">
+    <div class="section-header">
+      <div class="header-title">
+        <app-svg-icon name="clock" [size]="16" color="var(--accent)"></app-svg-icon>
+        <h3>Recent Searches</h3>
+      </div>
+      <button 
+        class="clear-all-btn" 
+        *ngIf="history.length > 0" 
+        (click)="onClearHistory()"
+        title="Clear All History"
+      >
+        Clear
+      </button>
+    </div>
+
+    <div class="list-container" *ngIf="history.length > 0; else noHistory">
+      <div 
+        class="list-item" 
+        *ngFor="let item of history"
+        (click)="onSelect(item)"
+      >
+        <span class="city-name">{{ item }}</span>
+        <button class="action-btn delete-btn" (click)="onRemoveHistory($event, item)" title="Delete Item">
+          <app-svg-icon name="trash" [size]="14" color="var(--text-muted)"></app-svg-icon>
+        </button>
+      </div>
+    </div>
+    <ng-template #noHistory>
+      <div class="empty-state">
+        <span>History is empty. Searches will appear here.</span>
+      </div>
+    </ng-template>
+  </div>
+</div>
